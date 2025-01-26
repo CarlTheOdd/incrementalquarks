@@ -1,0 +1,93 @@
+body {
+    display: inline-grid;
+    background-color: #3F888F;
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+    user-select: none;
+}
+
+ul {
+    display: none;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #225;
+}
+
+li {
+    float: left;
+}
+
+li p {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    font-size: 25px;
+}
+
+#main-clicker {
+    padding: 10px;
+    width: 200px;
+}
+
+#quark-clicker {
+    background-color: black;
+    border-radius: 50px;
+    width: 200px;
+    height: 200px;
+    box-shadow: 5px 5px 5px lightblue;
+}
+
+#resource-buyers {
+    position: fixed;
+    margin-left: 220px;
+    height: 100%;
+    width: calc(100% - 420px);
+}
+
+#resource-buyers div {
+    display: none;
+    position: relative;
+    margin: 50px;
+    padding: 50px;
+    border-radius: 25px;
+    width: 50%;
+    height: 50px;
+    background-color: black;
+    color: white;
+}
+
+#resources {
+    position: fixed;
+    margin-left: calc(100% - 200px);
+    height: 100%;
+    width: 200px;
+    color: white;
+    background-color: darkslategray;
+}
+
+#resources h3 {
+    padding: 25px;
+}
+
+#electron-upgrade-container div {
+    margin: 25px;
+    padding: 50px;
+    border-radius: 25px;
+    width: 100%;
+    height: 50px;
+    background-color: black;
+    color: white;
+}
+
+.cost {
+    color: lime;
+    font-size: 35px !important;
+}
+
+.resource-counter {
+    color: #61abf3;
+}
