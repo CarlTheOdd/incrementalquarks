@@ -27,12 +27,14 @@
       <h3 id="proton-container" style="display: none;">Protons: <span class="resource-counter" id="proton-counter">0</span></h3>
     </div>
     <div style="display: none;" id="electron-upgrade-container">
-      <div onclick="buyElectronUpgrade1()">Multiply quark gain by number of electrons <br> <span class="cost" id="e-upgrade-one">10</span></div>
-      <div id="e-upgrade-two-container" style="display: none;" onclick="buyElectronUpgrade2()">Electron upgrade one is now squared <br> <span class="cost" id="e-upgrade-two">25</span></div>
-      <div id="e-upgrade-three-container" style="display: none;" onclick="buyElectronUpgrade3()">Electron upgrade two is now squared <br> <span class="cost" id="e-upgrade-three">40</span></div>
+      <div onclick="buyElectronUpgrade1()">Quark gain raised to the 3/2 <br> <span class="cost" id="e-upgrade-one">10</span></div>
+      <div id="e-upgrade-two-container" style="display: none;" onclick="buyElectronUpgrade2()">Gain idle quarks equal to the square root of your quarks <br> <span class="cost" id="e-upgrade-two">25</span></div>
+      <div id="e-upgrade-three-container" style="display: none;" onclick="buyElectronUpgrade3()">Multiply quark gain by electrons <br> <span class="cost" id="e-upgrade-three">40</span></div>
     </div>
     <div style="display: none;" id="proton-upgrade-container">
-      <div onclick="buyProtonUpgrade1()">Multiply electron gain by quarks <br> <span class="cost" id="p-upgrade-one">5</span></div>
+      <div onclick="buyProtonUpgrade1()">Electron gain raised to the 4/3, caps at 1e+3 <br> <span class="cost" id="p-upgrade-one">5</span></div>
+      <div id="p-upgrade-two-container" style="display: none;" onclick="buyProtonUpgrade2()">Square idle electron gain <br> <span class="cost" id="p-upgrade-two">25</span></div>
+      <div id="p-upgrade-three-container" style="display: none;" onclick="buyProtonUpgrade3()">WIN! <br> <span class="cost" id="p-upgrade-three">100</span></div>
     </div>
   </body>
 </html>

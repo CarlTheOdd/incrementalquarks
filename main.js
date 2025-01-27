@@ -1,5 +1,5 @@
 let quarks = 0;
-let electrons = 0;
+let electrons = 75;
 let protons = 0;
 
 let isElectronDisplayed = false;
@@ -10,21 +10,32 @@ let eUpgradeTwoUnl = false;
 let eUpgradeThreeUnl = false;
 
 let pUpgradeOneUnl = false;
+let pUpgradeTwoUnl = false;
+let pUpgradeThreeUnl = false;
 
 let quarkIncrease = 1;
-let electronIncrease = 1;
+
+let quarkClickIncrease = quarkIncrease;
 
 let quarkIdleIncrease = 0;
+let electronIdleIncrease = 0;
 
 let initElectronCost = 20;
 let electronCost = 20;
+let electronCostIncrease = 1.1;
 let initProtonCost = 50;
 let protonCost = 50;
 
 function updateResourceGain() {
-    if(pUpgradeOneUnl) {
-        electronIncrease = Math.pow(quarks, 1/4);
+    if(eUpgradeTwoUnl) {
+        quarkIdleIncrease = Math.pow(quarks, 1/2) * quarkIncrease;
     }
+
+    if(pUpgradeOneUnl && electrons <= 1e3) {
+        electronIdleIncrease *= Math.pow(electrons, 1/3);
+    }
+
+    electrons += electronIdleIncrease;
 
     quarks += quarkIdleIncrease;
     
@@ -52,41 +63,6 @@ function updateDisplay() {
     !eUpgradeThreeUnl ? canAfford(electrons, 40, "e-upgrade-three") : document.getElementById("e-upgrade-three").style.color = "lime";
 
     !pUpgradeOneUnl ? canAfford(protons, 5, "p-upgrade-one") : document.getElementById("p-upgrade-one").style.color = "lime";
-}
-
-function canAfford(currency, cost, id) {
-    if(currency >= cost) {
-        document.getElementById(id).style.color = "lime";
-        return true;
-    } else {
-        document.getElementById(id).style.color = "red";
-        return false;
-    }
-}
-
-function increment() {
-    if(eUpgradeOneUnl && !eUpgradeTwoUnl && !eUpgradeThreeUnl) {
-        if(electrons != 0) {
-            quarkIncrease *= electrons;
-        }
-        quarks += quarkIncrease;
-    } else if(eUpgradeTwoUnl && !eUpgradeThreeUnl) {
-        if(electrons != 0) {
-            quarkIncrease *= Math.pow(electrons, 2);
-        }
-        quarks += quarkIncrease;
-    } else if(eUpgradeThreeUnl) {
-        if(electrons != 0) {
-            quarkIncrease *= Math.pow(electrons, 4);
-        }
-        quarks += quarkIncrease;
-    } else {
-        quarks += quarkIncrease;
-    }
-    
-    quarkIncrease = 1;
-
-    updateDisplay();
 
     if(quarks >= initElectronCost) {
         document.getElementById("electrons").style.display = "grid";
@@ -105,13 +81,49 @@ function increment() {
     if(electrons >= 30) {
         document.getElementById("e-upgrade-three-container").style.display = "block";
     }
+    if(protons >= 15) {
+        document.getElementById("p-upgrade-two-container").style.display = "block";
+    }
+    if(protons >= 50) {
+        document.getElementById("p-upgrade-three-container").style.display = "block";
+    }
+}
+
+function canAfford(currency, cost, id) {
+    if(currency >= cost) {
+        document.getElementById(id).style.color = "lime";
+        return true;
+    } else {
+        document.getElementById(id).style.color = "red";
+        return false;
+    }
+}
+
+function increment() {
+    if(eUpgradeOneUnl) {
+        if(quarks != 0) {
+            quarkClickIncrease *= Math.pow(quarks, 1/2);
+        }
+        quarks += quarkClickIncrease * quarkIncrease;
+    } else {
+        quarks += quarkClickIncrease * quarkIncrease;
+    }
+    if(eUpgradeThreeUnl && electrons > 1) {
+        quarkIncrease *= electrons;
+        quarks += quarkClickIncrease * quarkIncrease;
+    }
+    
+    quarkIncrease = 1;
+    quarkClickIncrease = 1;
+
+    updateDisplay();
 }
 
 function buyElectron() {
     if(quarks >= electronCost) {
         quarks -= electronCost;
-        electronCost *= 1.1;
-        electrons += electronIncrease;
+        electronCost *= electronCostIncrease;
+        electrons++;
         if(!isElectronDisplayed) {
             isElectronDisplayed = true;
             document.getElementById("electron-container").style.display = "block";
@@ -157,9 +169,9 @@ function buyElectronUpgrade3() {
 function buyProton() {
     if(electrons >= protonCost) {
         electrons -= protonCost;
-        protonCost *= 1.05;
+        protonCost *= 1.2;
         protons++;
-        quarkIdleIncrease += Math.pow(electrons, 3);
+        electronIdleIncrease++;
         if(!isProtonDisplayed) {
             isProtonDisplayed = true;
             electronCost = 10000;
@@ -174,12 +186,27 @@ function buyProton() {
 function buyProtonUpgrade1() {
     if(protons >= 5 && !pUpgradeOneUnl) {
         protons -= 5;
-        electronCost = 1e7;
+        electronCost = 1e5;
         pUpgradeOneUnl = true;
-
         document.getElementById("p-upgrade-one").innerHTML = "Purchased!";
 
         updateDisplay();
+    }
+}
+
+function buyProtonUpgrade2() {
+    if(protons >= 25 && !pUpgradeTwoUnl) {
+        protons -= 25;
+        protonCost = 75;
+        electronIdleIncrease = Math.pow(electronIdleIncrease, 2);
+        pUpgradeTwoUnl = true;
+        document.getElementById("p-upgrade-two").innerHTML = "Purchased!";
+    }
+}
+
+function buyProtonUpgrade3() {
+    if(protons >= 50 && !pUpgradeThreeUnl) {
+        window.location = "win.html";
     }
 }
 
