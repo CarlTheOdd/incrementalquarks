@@ -1,5 +1,5 @@
 let quarks = 0;
-let electrons = 75;
+let electrons = 0;
 let protons = 0;
 
 let isElectronDisplayed = false;
